@@ -1,5 +1,4 @@
-#!/bin/bash                  
-                                                                                                                                                                   
+#!/bin/bash                                                                                                                                                                                     
 #SBATCH --job-name=RNAseqStar
 ##SBATCH --nodes=1
 ##SBATCH --cpus-per-task=1
@@ -19,7 +18,7 @@ fq_r1=$1.fastq.gz
 
 # folder of fastq files                                                                                                                                                                         
 dir=/gpfs/data/proteomics/projects/Sunny/ribsome/mcf7/fastq
-genomedir=/gpfs/data/proteomics/projects/Sunny/genome/human/hg38_star
+genomedir=/gpfs/data/proteomics/projects/Sunny/
 outputdir=${dir}/star_out/$1
 
 # go to the output directory
@@ -52,7 +51,7 @@ STAR \
 STAR \
 --runMode genomeGenerate \
 --genomeDir ${outputdir} \
---genomeFastaFiles ${genomedir}/hg38.fa \
+--genomeFastaFiles ${genomedir}/hg38_with_l1.fa \
 --sjdbOverhang 100 \
 --runThreadN 16 \
 --sjdbFileChrStartEnd ${outputdir}/SJ.out.tab
@@ -60,7 +59,7 @@ STAR \
 # Alignment 2ND PASS                                                                                                                                                                                    
 STAR \
 --genomeDir $outputdir \
---readFilesIn ${dir}/${fq_r1} \
+--readFilesIn ${dir}/${fq_r1} ${dir}/${fq_r2} \
 --runThreadN 8 \
 --outFilterMultimapScoreRange 1 \
 --outFilterMultimapNmax 20 \
