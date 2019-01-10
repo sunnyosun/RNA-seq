@@ -1,0 +1,1 @@
+/gpfs/data/proteomics/projects/Sunny/bash/rnaseq_star_2.6.0a_slurm.bash
